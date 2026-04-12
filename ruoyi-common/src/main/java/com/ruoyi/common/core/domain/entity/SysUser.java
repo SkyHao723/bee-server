@@ -96,6 +96,10 @@ public class SysUser extends BaseEntity
     /** 角色ID */
     private Long roleId;
 
+    /** 蜂箱ID */
+    @Excel(name = "蜂箱ID")
+    private Long apiaryId;
+
     public SysUser()
     {
 
@@ -310,6 +314,16 @@ public class SysUser extends BaseEntity
         this.roleId = roleId;
     }
 
+    public Long getApiaryId()
+    {
+        return apiaryId;
+    }
+
+    public void setApiaryId(Long apiaryId)
+    {
+        this.apiaryId = apiaryId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -333,6 +347,7 @@ public class SysUser extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("dept", getDept())
+            .append("apiaryId", getApiaryId())
             .toString();
     }
 }
