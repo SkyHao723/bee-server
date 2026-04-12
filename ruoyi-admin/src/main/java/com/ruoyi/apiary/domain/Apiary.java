@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain;
+package com.ruoyi.apiary.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -6,7 +6,7 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 【请填写功能名称】对象 apiary
+ * 蜂厂管理对象 apiary
  * 
  * @author ruoyi
  * @date 2026-04-12
@@ -15,19 +15,19 @@ public class Apiary extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 蜂场id */
+    /** 蜂场ID */
     private Long apiaryId;
 
-    /** 蜂场名字 */
-    @Excel(name = "蜂场名字")
+    /** 蜂场名称 */
+    @Excel(name = "蜂场名称")
     private String apiaryName;
 
-    /** 蜂场联系人 */
-    @Excel(name = "蜂场联系人")
+    /** 联系人 */
+    @Excel(name = "联系人")
     private String contactName;
 
-    /** 蜂场联系电话 */
-    @Excel(name = "蜂场联系电话")
+    /** 联系电话 */
+    @Excel(name = "联系电话")
     private String contactPhone;
 
     /** 蜂场地址 */

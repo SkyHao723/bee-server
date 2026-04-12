@@ -1,4 +1,4 @@
-package com.ruoyi.system.controller;
+package com.ruoyi.apiary.controller;
 
 import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,28 +16,28 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.Apiary;
-import com.ruoyi.system.service.IApiaryService;
+import com.ruoyi.apiary.domain.Apiary;
+import com.ruoyi.apiary.service.IApiaryService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 【请填写功能名称】Controller
+ * 蜂厂管理Controller
  * 
  * @author ruoyi
  * @date 2026-04-12
  */
 @RestController
-@RequestMapping("/system/apiary")
+@RequestMapping("/apiary/apiary")
 public class ApiaryController extends BaseController
 {
     @Autowired
     private IApiaryService apiaryService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询蜂厂管理列表
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:list')")
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:list')")
     @GetMapping("/list")
     public TableDataInfo list(Apiary apiary)
     {
@@ -47,22 +47,22 @@ public class ApiaryController extends BaseController
     }
 
     /**
-     * 导出【请填写功能名称】列表
+     * 导出蜂厂管理列表
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:export')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:export')")
+    @Log(title = "蜂厂管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, Apiary apiary)
     {
         List<Apiary> list = apiaryService.selectApiaryList(apiary);
         ExcelUtil<Apiary> util = new ExcelUtil<Apiary>(Apiary.class);
-        util.exportExcel(response, list, "【请填写功能名称】数据");
+        util.exportExcel(response, list, "蜂厂管理数据");
     }
 
     /**
-     * 获取【请填写功能名称】详细信息
+     * 获取蜂厂管理详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:query')")
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:query')")
     @GetMapping(value = "/{apiaryId}")
     public AjaxResult getInfo(@PathVariable("apiaryId") Long apiaryId)
     {
@@ -70,10 +70,10 @@ public class ApiaryController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增蜂厂管理
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:add')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:add')")
+    @Log(title = "蜂厂管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody Apiary apiary)
     {
@@ -81,10 +81,10 @@ public class ApiaryController extends BaseController
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改蜂厂管理
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:edit')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:edit')")
+    @Log(title = "蜂厂管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody Apiary apiary)
     {
@@ -92,10 +92,10 @@ public class ApiaryController extends BaseController
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除蜂厂管理
      */
-    @PreAuthorize("@ss.hasPermi('system:apiary:remove')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('apiary:apiary:remove')")
+    @Log(title = "蜂厂管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{apiaryIds}")
     public AjaxResult remove(@PathVariable Long[] apiaryIds)
     {
