@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.EquipmentMapper">
+    
+    <resultMap type="Equipment" id="EquipmentResult">
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="beehiveId"    column="beehive_id"    />
+        <result property="apiaryId"    column="apiary_id"    />
+        <result property="deviceStatus"    column="device_status"    />
+    </resultMap>
+
+    <sql id="selectEquipmentVo">
+        select equipment_id, beehive_id, apiary_id, device_status from equipment
+    </sql>
+
+    <select id="selectEquipmentList" parameterType="Equipment" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        <where>  
+            <if test="beehiveId != null "> and beehive_id = #{beehiveId}</if>
+            <if test="apiaryId != null "> and apiary_id = #{apiaryId}</if>
+            <if test="deviceStatus != null "> and device_status = #{deviceStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipmentByEquipmentId" parameterType="Long" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        where equipment_id = #{equipmentId}
+    </select>
+
+    <insert id="insertEquipment" parameterType="Equipment" useGeneratedKeys="true" keyProperty="equipmentId">
+        insert into equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="beehiveId != null">beehive_id,</if>
+            <if test="apiaryId != null">apiary_id,</if>
+            <if test="deviceStatus != null">device_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="beehiveId != null">#{beehiveId},</if>
+            <if test="apiaryId != null">#{apiaryId},</if>
+            <if test="deviceStatus != null">#{deviceStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipment" parameterType="Equipment">
+        update equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="beehiveId != null">beehive_id = #{beehiveId},</if>
+            <if test="apiaryId != null">apiary_id = #{apiaryId},</if>
+            <if test="deviceStatus != null">device_status = #{deviceStatus},</if>
+        </trim>
+        where equipment_id = #{equipmentId}
+    </update>
+
+    <delete id="deleteEquipmentByEquipmentId" parameterType="Long">
+        delete from equipment where equipment_id = #{equipmentId}
+    </delete>
+
+    <delete id="deleteEquipmentByEquipmentIds" parameterType="String">
+        delete from equipment where equipment_id in 
+        <foreach item="equipmentId" collection="array" open="(" separator="," close=")">
+            #{equipmentId}
+        </foreach>
+    </delete>
+</mapper>
