@@ -193,7 +193,7 @@ public class SysRoleServiceImpl implements ISysRoleService
             throw new ServiceException("不允许操作超级管理员角色");
         }
     }
-
+//
     /**
      * 校验角色是否有数据权限
      * 
