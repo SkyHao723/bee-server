@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectBeehiveVo">
-        select beehive_id, apiary_id, beehive_name, beehive_status, beehive_group, location from beehive
+        select beehive_id, apiary_id, beehive_name, beehive_status, beehive_group, AsText(location) as location from beehive
     </sql>
 
     <select id="selectBeehiveList" parameterType="Beehive" resultMap="BeehiveResult">
