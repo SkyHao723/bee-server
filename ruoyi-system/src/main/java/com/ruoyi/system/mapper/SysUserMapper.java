@@ -27,6 +27,8 @@ public interface SysUserMapper
      */
     public List<Long> selectUserIdsWithRole();
 
+    public List<Long> selectUserIdsNotBeekeeper();
+
     /**
      * 根据条件分页查询已配用户角色列表
      * 

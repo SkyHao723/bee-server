@@ -124,7 +124,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectUserIdsWithRole" resultType="Long">
-		select distinct user_id from sys_user_role
+		select distinct ur.user_id from sys_user_role ur
+		left join sys_role r on ur.role_id = r.role_id
+		where r.role_key = 'beekeeper'
+	</select>
+
+	<select id="selectUserIdsNotBeekeeper" resultType="Long">
+		select distinct u.user_id from sys_user u
+		left join sys_user_role ur on u.user_id = ur.user_id
+		left join sys_role r on ur.role_id = r.role_id
+		where u.del_flag = '0' and (ur.user_id is null or r.role_key != 'beekeeper')
 	</select>
 
 	<select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">

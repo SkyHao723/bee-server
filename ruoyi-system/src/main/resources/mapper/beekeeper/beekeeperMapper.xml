@@ -35,7 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectbeekeeperList" parameterType="beekeeper" resultMap="beekeeperResult">
         select u.user_id, u.dept_id, u.apiary_id, u.user_name, u.nick_name, u.user_type, u.email, u.phonenumber, u.sex, u.avatar, u.password, u.status, u.del_flag, u.login_ip, u.login_date, u.pwd_update_date, u.create_by, u.create_time, u.update_by, u.update_time, u.remark from sys_user u
         left join sys_user_role ur on u.user_id = ur.user_id
-        where u.del_flag = '0' and ur.user_id is null
+        left join sys_role r on ur.role_id = r.role_id
+        where u.del_flag = '0' and r.role_key = 'beekeeper'
         <where>
             <if test="deptId != null "> and u.dept_id = #{deptId}</if>
             <if test="apiaryId != null "> and u.apiary_id = #{apiaryId}</if>

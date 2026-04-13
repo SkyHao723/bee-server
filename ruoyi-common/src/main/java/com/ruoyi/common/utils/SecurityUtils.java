@@ -110,11 +110,6 @@ public class SecurityUtils
      */
     public static boolean matchesPassword(String rawPassword, String encodedPassword)
     {
-        // 如果密码不是以 $2a$ 开头（BCrypt格式），则直接比较明文
-        if (encodedPassword == null || !encodedPassword.startsWith("$2a$"))
-        {
-            return rawPassword.equals(encodedPassword);
-        }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
