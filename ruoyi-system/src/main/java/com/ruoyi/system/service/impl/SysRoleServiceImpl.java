@@ -138,6 +138,12 @@ public class SysRoleServiceImpl implements ISysRoleService
         return roleMapper.selectRoleById(roleId);
     }
 
+    @Override
+    public SysRole selectRoleByRoleKey(String roleKey)
+    {
+        return roleMapper.selectRoleByRoleKey(roleKey);
+    }
+
     /**
      * 校验角色名称是否唯一
      * 
@@ -187,7 +193,7 @@ public class SysRoleServiceImpl implements ISysRoleService
             throw new ServiceException("不允许操作超级管理员角色");
         }
     }
-
+//
     /**
      * 校验角色是否有数据权限
      * 

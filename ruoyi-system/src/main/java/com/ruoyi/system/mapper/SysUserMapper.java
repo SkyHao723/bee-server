@@ -21,6 +21,15 @@ public interface SysUserMapper
     public List<SysUser> selectUserList(SysUser sysUser);
 
     /**
+     * 查询有角色的用户ID列表
+     *
+     * @return 用户ID列表
+     */
+    public List<Long> selectUserIdsWithRole();
+
+    public List<Long> selectUserIdsNotBeekeeper();
+
+    /**
      * 根据条件分页查询已配用户角色列表
      * 
      * @param user 用户信息

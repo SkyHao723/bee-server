@@ -59,6 +59,8 @@ public interface ISysRoleService
      */
     public SysRole selectRoleById(Long roleId);
 
+    public SysRole selectRoleByRoleKey(String roleKey);
+
     /**
      * 校验角色名称是否唯一
      * 

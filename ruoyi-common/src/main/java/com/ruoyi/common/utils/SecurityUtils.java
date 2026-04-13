@@ -116,7 +116,7 @@ public class SecurityUtils
 
     /**
      * 是否为管理员
-     * 
+     *
      * @return 结果
      */
     public static boolean isAdmin()
@@ -126,13 +126,35 @@ public class SecurityUtils
 
     /**
      * 是否为管理员
-     * 
+     *
      * @param userId 用户ID
      * @return 结果
      */
     public static boolean isAdmin(Long userId)
     {
         return userId != null && 1L == userId;
+    }
+
+    /**
+     * 是否为蜂场管理员
+     *
+     * @return 结果
+     */
+    public static boolean isApiaryAdmin()
+    {
+        return getLoginUser().getUser().getRoles().stream()
+                .anyMatch(r -> "apiary".equals(r.getRoleKey()));
+    }
+
+    /**
+     * 是否为蜂农
+     *
+     * @return 结果
+     */
+    public static boolean isBeekeeper()
+    {
+        return getLoginUser().getUser().getRoles().stream()
+                .anyMatch(r -> "beekeeper".equals(r.getRoleKey()));
     }
 
     /**

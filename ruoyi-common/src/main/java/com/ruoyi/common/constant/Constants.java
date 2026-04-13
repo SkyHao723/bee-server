@@ -81,6 +81,11 @@ public class Constants
     public static final String SUPER_ADMIN = "admin";
 
     /**
+     * 蜂场管理员角色权限标识
+     */
+    public static final String APIARY_ADMIN = "apiary";
+
+    /**
      * 角色权限分隔符
      */
     public static final String ROLE_DELIMITER = ",";

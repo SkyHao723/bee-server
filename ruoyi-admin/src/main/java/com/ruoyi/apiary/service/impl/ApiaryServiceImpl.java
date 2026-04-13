@@ -1,14 +1,14 @@
-package com.ruoyi.system.service.impl;
+package com.ruoyi.apiary.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.ApiaryMapper;
-import com.ruoyi.system.domain.Apiary;
-import com.ruoyi.system.service.IApiaryService;
+import com.ruoyi.apiary.mapper.ApiaryMapper;
+import com.ruoyi.apiary.domain.Apiary;
+import com.ruoyi.apiary.service.IApiaryService;
 
 /**
- * 【请填写功能名称】Service业务层处理
+ * 蜂厂管理Service业务层处理
  * 
  * @author ruoyi
  * @date 2026-04-12
@@ -20,10 +20,10 @@ public class ApiaryServiceImpl implements IApiaryService
     private ApiaryMapper apiaryMapper;
 
     /**
-     * 查询【请填写功能名称】
+     * 查询蜂厂管理
      * 
-     * @param apiaryId 【请填写功能名称】主键
-     * @return 【请填写功能名称】
+     * @param apiaryId 蜂厂管理主键
+     * @return 蜂厂管理
      */
     @Override
     public Apiary selectApiaryByApiaryId(Long apiaryId)
@@ -32,10 +32,10 @@ public class ApiaryServiceImpl implements IApiaryService
     }
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询蜂厂管理列表
      * 
-     * @param apiary 【请填写功能名称】
-     * @return 【请填写功能名称】
+     * @param apiary 蜂厂管理
+     * @return 蜂厂管理
      */
     @Override
     public List<Apiary> selectApiaryList(Apiary apiary)
@@ -44,9 +44,9 @@ public class ApiaryServiceImpl implements IApiaryService
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增蜂厂管理
      * 
-     * @param apiary 【请填写功能名称】
+     * @param apiary 蜂厂管理
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class ApiaryServiceImpl implements IApiaryService
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改蜂厂管理
      * 
-     * @param apiary 【请填写功能名称】
+     * @param apiary 蜂厂管理
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class ApiaryServiceImpl implements IApiaryService
     }
 
     /**
-     * 批量删除【请填写功能名称】
+     * 批量删除蜂厂管理
      * 
-     * @param apiaryIds 需要删除的【请填写功能名称】主键
+     * @param apiaryIds 需要删除的蜂厂管理主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class ApiaryServiceImpl implements IApiaryService
     }
 
     /**
-     * 删除【请填写功能名称】信息
+     * 删除蜂厂管理信息
      * 
-     * @param apiaryId 【请填写功能名称】主键
+     * @param apiaryId 蜂厂管理主键
      * @return 结果
      */
     @Override

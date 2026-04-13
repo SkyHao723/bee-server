@@ -76,7 +76,22 @@ public class SysUserServiceImpl implements ISysUserService
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user)
     {
-        return userMapper.selectUserList(user);
+        List<SysUser> users = userMapper.selectUserList(user);
+        // 超级管理员：显示非蜂农用户
+        if (SecurityUtils.isAdmin())
+        {
+            List<Long> nonBeekeeperUserIds = userMapper.selectUserIdsNotBeekeeper();
+            final List<Long> nonBeekeeperIds = nonBeekeeperUserIds;
+            users = users.stream().filter(u -> nonBeekeeperIds.contains(u.getUserId())).collect(Collectors.toList());
+        }
+        // 蜂场管理员只显示蜂农用户（beekeeper角色）
+        else if (SecurityUtils.isApiaryAdmin())
+        {
+            List<Long> beekeeperUserIds = userMapper.selectUserIdsWithRole();
+            final List<Long> beekeeperIds = beekeeperUserIds;
+            users = users.stream().filter(u -> beekeeperIds.contains(u.getUserId())).collect(Collectors.toList());
+        }
+        return users;
     }
 
     /**
