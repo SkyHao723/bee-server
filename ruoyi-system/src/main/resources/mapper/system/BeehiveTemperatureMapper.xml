@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BeehiveTemperatureMapper">
+
+    <resultMap type="BeehiveTemperature" id="BeehiveTemperatureResult">
+        <result property="id"           column="id"           />
+        <result property="apiaryId"     column="apiary_id"    />
+        <result property="beehiveId"    column="beehive_id"   />
+        <result property="temperature"  column="temperature"  />
+        <result property="humidity"     column="humidity"     />
+        <result property="createdAt"    column="created_at"   />
+    </resultMap>
+
+    <sql id="selectBeehiveTemperatureVo">
+        select id, apiary_id, beehive_id, temperature, humidity, created_at
+        from beehive_temperature
+    </sql>
+
+    <insert id="insertBeehiveTemperature">
+        insert into beehive_temperature (
+            apiary_id,
+            beehive_id,
+            temperature,
+            humidity,
+            created_at
+        ) values (
+            #{apiaryId},
+            #{beehiveId},
+            #{temperature},
+            #{humidity},
+            NOW()
+        )
+    </insert>
+
+    <select id="selectBeehiveTemperatureList" parameterType="BeehiveTemperature" resultMap="BeehiveTemperatureResult">
+        <include refid="selectBeehiveTemperatureVo"/>
+        <where>
+            <if test="apiaryId != null">AND apiary_id = #{apiaryId}</if>
+            <if test="beehiveId != null">AND beehive_id = #{beehiveId}</if>
+        </where>
+        order by created_at desc
+    </select>
+
+    <select id="selectLatestTemperature" resultMap="BeehiveTemperatureResult">
+        <include refid="selectBeehiveTemperatureVo"/>
+        where apiary_id = #{apiaryId} and beehive_id = #{beehiveId}
+        order by created_at desc
+        limit 1
+    </select>
+
+</mapper>
