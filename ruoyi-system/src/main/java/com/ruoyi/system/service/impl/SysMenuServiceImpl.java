@@ -147,6 +147,11 @@ public class SysMenuServiceImpl implements ISysMenuService
         {
             menus = menuMapper.selectMenuTreeByUserId(userId);
         }
+        // 超级管理员或蜂农：隐藏蜂农信息菜单
+        if (SecurityUtils.isAdmin() || SecurityUtils.isBeekeeper())
+        {
+            menus = menus.stream().filter(menu -> !menu.getMenuName().equals("蜂农信息")).collect(Collectors.toList());
+        }
         return getChildPerms(menus, MENU_ROOT_ID);
     }
 

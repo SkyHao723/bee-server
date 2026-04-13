@@ -111,7 +111,9 @@ public class SysUserController extends BaseController
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
         }
         List<SysRole> roles = roleService.selectRoleAll();
-        ajax.put("roles", SecurityUtils.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        // 获取当前登录用户，判断是否为超级管理员
+        boolean isSuperAdmin = SecurityUtils.isAdmin();
+        ajax.put("roles", isSuperAdmin ? roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()) : roles);
         ajax.put("posts", postService.selectPostAll());
         return ajax;
     }
