@@ -20,6 +20,14 @@ public interface BeehiveMapper
     public Beehive selectBeehiveByBeehiveId(Long beehiveId);
 
     /**
+     * 通过权力密钥查询蜂箱
+     *
+     * @param power 权力密钥
+     * @return 蜂箱
+     */
+    public Beehive selectBeehiveByPower(String power);
+
+    /**
      * 查询蜂箱管理列表
      * 
      * @param beehive 蜂箱管理

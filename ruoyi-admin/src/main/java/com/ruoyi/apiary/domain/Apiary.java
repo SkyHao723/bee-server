@@ -34,6 +34,9 @@ public class Apiary extends BaseEntity
     @Excel(name = "蜂场地址")
     private String apiaryAddress;
 
+    /** 位置 */
+    private String location;
+
     public void setApiaryId(Long apiaryId) 
     {
         this.apiaryId = apiaryId;
@@ -74,14 +77,24 @@ public class Apiary extends BaseEntity
         return contactPhone;
     }
 
-    public void setApiaryAddress(String apiaryAddress) 
+    public void setApiaryAddress(String apiaryAddress)
     {
         this.apiaryAddress = apiaryAddress;
     }
 
-    public String getApiaryAddress() 
+    public String getApiaryAddress()
     {
         return apiaryAddress;
+    }
+
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
+
+    public String getLocation()
+    {
+        return location;
     }
 
     @Override
@@ -92,6 +105,7 @@ public class Apiary extends BaseEntity
             .append("contactName", getContactName())
             .append("contactPhone", getContactPhone())
             .append("apiaryAddress", getApiaryAddress())
+            .append("location", getLocation())
             .toString();
     }
 }

@@ -11,21 +11,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="beehiveStatus"    column="beehive_status"    />
         <result property="beehiveGroup"    column="beehive_group"    />
         <result property="location"    column="location"    />
+        <result property="power"    column="power"    />
+    </resultMap>
+
+    <!-- 带名称的结果映射 -->
+    <resultMap type="Beehive" id="BeehiveResultWithNames">
+        <result property="beehiveId"    column="beehive_id"    />
+        <result property="apiaryId"    column="apiary_id"    />
+        <result property="beehiveName"    column="beehive_name"    />
+        <result property="beehiveStatus"    column="beehive_status"    />
+        <result property="beehiveGroup"    column="beehive_group"    />
+        <result property="location"    column="location"    />
+        <result property="power"    column="power"    />
+        <result property="apiaryName"    column="apiary_name"    />
     </resultMap>
 
     <sql id="selectBeehiveVo">
-        select beehive_id, apiary_id, beehive_name, beehive_status, beehive_group, AsText(location) as location from beehive
+        select beehive_id, apiary_id, beehive_name, beehive_status, beehive_group, AsText(location) as location, power from beehive
     </sql>
 
-    <select id="selectBeehiveList" parameterType="Beehive" resultMap="BeehiveResult">
-        <include refid="selectBeehiveVo"/>
-        <where>  
-            <if test="beehiveId != null "> and beehive_id = #{beehiveId}</if>
-            <if test="apiaryId != null "> and apiary_id = #{apiaryId}</if>
-            <if test="beehiveName != null  and beehiveName != ''"> and beehive_name like concat('%', #{beehiveName}, '%')</if>
-            <if test="beehiveStatus != null "> and beehive_status = #{beehiveStatus}</if>
-            <if test="beehiveGroup != null "> and beehive_group = #{beehiveGroup}</if>
-            <if test="location != null  and location != ''"> and location = #{location}</if>
+    <sql id="selectBeehiveVoWithNames">
+        select b.beehive_id, b.apiary_id, b.beehive_name, b.beehive_status, b.beehive_group, AsText(b.location) as location, b.power,
+               a.apiary_name
+        from beehive b
+        left join apiary a on b.apiary_id = a.apiary_id
+    </sql>
+
+    <select id="selectBeehiveList" parameterType="Beehive" resultMap="BeehiveResultWithNames">
+        <include refid="selectBeehiveVoWithNames"/>
+        <where>
+            <if test="beehiveId != null "> and b.beehive_id = #{beehiveId}</if>
+            <if test="apiaryId != null "> and b.apiary_id = #{apiaryId}</if>
+            <if test="beehiveName != null  and beehiveName != ''"> and b.beehive_name like concat('%', #{beehiveName}, '%')</if>
+            <if test="beehiveStatus != null "> and b.beehive_status = #{beehiveStatus}</if>
+            <if test="beehiveGroup != null "> and b.beehive_group = #{beehiveGroup}</if>
+            <if test="location != null  and location != ''"> and b.location = #{location}</if>
+            <if test="power != null and power != ''"> and b.power = #{power}</if>
         </where>
     </select>
     
@@ -34,7 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where beehive_id = #{beehiveId}
     </select>
 
-    <insert id="insertBeehive" parameterType="Beehive">
+    <select id="selectBeehiveByPower" parameterType="String" resultMap="BeehiveResult">
+        <include refid="selectBeehiveVo"/>
+        where power = #{power}
+    </select>
+
+    <insert id="insertBeehive" parameterType="Beehive" useGeneratedKeys="true" keyProperty="beehiveId">
         insert into beehive
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="beehiveId != null">beehive_id,</if>
@@ -43,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="beehiveStatus != null">beehive_status,</if>
             <if test="beehiveGroup != null">beehive_group,</if>
             <if test="location != null and location != ''">location,</if>
+            <if test="power != null and power != ''">power,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="beehiveId != null">#{beehiveId},</if>
@@ -51,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="beehiveStatus != null">#{beehiveStatus},</if>
             <if test="beehiveGroup != null">#{beehiveGroup},</if>
             <if test="location != null and location != ''">#{location},</if>
+            <if test="power != null and power != ''">#{power},</if>
          </trim>
     </insert>
 
@@ -62,6 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="beehiveStatus != null">beehive_status = #{beehiveStatus},</if>
             <if test="beehiveGroup != null">beehive_group = #{beehiveGroup},</if>
             <if test="location != null and location != ''">location = #{location},</if>
+            <if test="power != null and power != ''">power = #{power},</if>
         </trim>
         where beehive_id = #{beehiveId}
     </update>

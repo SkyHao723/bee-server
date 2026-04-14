@@ -53,9 +53,17 @@ public interface IEquipmentService
 
     /**
      * 删除设备管理信息
-     * 
+     *
      * @param equipmentId 设备管理主键
      * @return 结果
      */
     public int deleteEquipmentByEquipmentId(Long equipmentId);
+
+    /**
+     * 通过密文查找设备
+     *
+     * @param power 设备密文
+     * @return 设备
+     */
+    public Equipment selectEquipmentByPower(String power);
 }

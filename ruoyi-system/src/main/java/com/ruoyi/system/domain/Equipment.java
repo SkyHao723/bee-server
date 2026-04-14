@@ -30,44 +30,83 @@ public class Equipment extends BaseEntity
     @Excel(name = "设备状态")
     private Integer deviceStatus;
 
-    public void setEquipmentId(Long equipmentId) 
+    /** 设备密文 */
+    private String power;
+
+    /** 蜂箱名称 */
+    private String beehiveName;
+
+    /** 蜂厂名称 */
+    private String apiaryName;
+
+    public void setEquipmentId(Long equipmentId)
     {
         this.equipmentId = equipmentId;
     }
 
-    public Long getEquipmentId() 
+    public Long getEquipmentId()
     {
         return equipmentId;
     }
 
-    public void setBeehiveId(Long beehiveId) 
+    public void setBeehiveId(Long beehiveId)
     {
         this.beehiveId = beehiveId;
     }
 
-    public Long getBeehiveId() 
+    public Long getBeehiveId()
     {
         return beehiveId;
     }
 
-    public void setApiaryId(Long apiaryId) 
+    public void setApiaryId(Long apiaryId)
     {
         this.apiaryId = apiaryId;
     }
 
-    public Long getApiaryId() 
+    public Long getApiaryId()
     {
         return apiaryId;
     }
 
-    public void setDeviceStatus(Integer deviceStatus) 
+    public void setDeviceStatus(Integer deviceStatus)
     {
         this.deviceStatus = deviceStatus;
     }
 
-    public Integer getDeviceStatus() 
+    public Integer getDeviceStatus()
     {
         return deviceStatus;
+    }
+
+    public String getPower()
+    {
+        return power;
+    }
+
+    public void setPower(String power)
+    {
+        this.power = power;
+    }
+
+    public String getBeehiveName()
+    {
+        return beehiveName;
+    }
+
+    public void setBeehiveName(String beehiveName)
+    {
+        this.beehiveName = beehiveName;
+    }
+
+    public String getApiaryName()
+    {
+        return apiaryName;
+    }
+
+    public void setApiaryName(String apiaryName)
+    {
+        this.apiaryName = apiaryName;
     }
 
     @Override
