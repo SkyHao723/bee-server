@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.domain.SysUserRole;
@@ -32,6 +34,9 @@ public class beekeeperServiceImpl implements IbeekeeperService
     @Autowired
     private ISysRoleService roleService;
 
+    @Autowired
+    private SysUserMapper userMapper;
+
     /**
      * 查询蜂农信息
      * 
@@ -53,6 +58,16 @@ public class beekeeperServiceImpl implements IbeekeeperService
     @Override
     public List<beekeeper> selectbeekeeperList(beekeeper beekeeper)
     {
+        // 如果当前用户是蜂厂管理员，则只显示该蜂厂管理员创建的蜂农
+        if (SecurityUtils.isApiaryAdmin())
+        {
+            Long currentUserId = SecurityUtils.getUserId();
+            SysUser currentUser = userMapper.selectUserById(currentUserId);
+            if (currentUser != null && currentUser.getApiaryId() != null)
+            {
+                beekeeper.setApiaryId(currentUser.getApiaryId());
+            }
+        }
         return beekeeperMapper.selectbeekeeperList(beekeeper);
     }
 
@@ -70,6 +85,16 @@ public class beekeeperServiceImpl implements IbeekeeperService
         if (beekeeper.getPassword() != null && !beekeeper.getPassword().startsWith("$2a$"))
         {
             beekeeper.setPassword(SecurityUtils.encryptPassword(beekeeper.getPassword()));
+        }
+        // 如果当前用户是蜂厂管理员，则自动设置该蜂厂管理员的apiary_id
+        if (SecurityUtils.isApiaryAdmin())
+        {
+            Long currentUserId = SecurityUtils.getUserId();
+            SysUser currentUser = userMapper.selectUserById(currentUserId);
+            if (currentUser != null && currentUser.getApiaryId() != null)
+            {
+                beekeeper.setApiaryId(currentUser.getApiaryId());
+            }
         }
         // 先插入用户，获取userId
         int rows = beekeeperMapper.insertbeekeeper(beekeeper);
