@@ -39,6 +39,13 @@ public class Beehive extends BaseEntity
     @Excel(name = "位置")
     private String location;
 
+    /** 权力密钥（用于二维码绑定验证） */
+    @Excel(name = "权力密钥")
+    private String power;
+
+    /** 蜂厂名称 */
+    private String apiaryName;
+
     public void setBeehiveId(Long beehiveId) 
     {
         this.beehiveId = beehiveId;
@@ -94,9 +101,29 @@ public class Beehive extends BaseEntity
         this.location = location;
     }
 
-    public String getLocation() 
+    public String getLocation()
     {
         return location;
+    }
+
+    public void setPower(String power)
+    {
+        this.power = power;
+    }
+
+    public String getPower()
+    {
+        return power;
+    }
+
+    public String getApiaryName()
+    {
+        return apiaryName;
+    }
+
+    public void setApiaryName(String apiaryName)
+    {
+        this.apiaryName = apiaryName;
     }
 
     @Override
@@ -108,6 +135,7 @@ public class Beehive extends BaseEntity
             .append("beehiveStatus", getBeehiveStatus())
             .append("beehiveGroup", getBeehiveGroup())
             .append("location", getLocation())
+            .append("power", getPower())
             .toString();
     }
 }

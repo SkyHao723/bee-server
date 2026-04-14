@@ -9,18 +9,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="beehiveId"    column="beehive_id"    />
         <result property="apiaryId"    column="apiary_id"    />
         <result property="deviceStatus"    column="device_status"    />
+        <result property="power"    column="power"    />
+    </resultMap>
+
+    <!-- 带名称的结果映射 -->
+    <resultMap type="Equipment" id="EquipmentResultWithNames">
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="beehiveId"    column="beehive_id"    />
+        <result property="apiaryId"    column="apiary_id"    />
+        <result property="deviceStatus"    column="device_status"    />
+        <result property="power"    column="power"    />
+        <result property="beehiveName"    column="beehive_name"    />
+        <result property="apiaryName"    column="apiary_name"    />
     </resultMap>
 
     <sql id="selectEquipmentVo">
-        select equipment_id, beehive_id, apiary_id, device_status from equipment
+        select equipment_id, beehive_id, apiary_id, device_status, power from equipment
     </sql>
 
-    <select id="selectEquipmentList" parameterType="Equipment" resultMap="EquipmentResult">
-        <include refid="selectEquipmentVo"/>
-        <where>  
-            <if test="beehiveId != null "> and beehive_id = #{beehiveId}</if>
-            <if test="apiaryId != null "> and apiary_id = #{apiaryId}</if>
-            <if test="deviceStatus != null "> and device_status = #{deviceStatus}</if>
+    <sql id="selectEquipmentVoWithNames">
+        select e.equipment_id, e.beehive_id, e.apiary_id, e.device_status, e.power,
+               b.beehive_name, a.apiary_name
+        from equipment e
+        left join beehive b on e.beehive_id = b.beehive_id
+        left join apiary a on e.apiary_id = a.apiary_id
+    </sql>
+
+    <select id="selectEquipmentList" parameterType="Equipment" resultMap="EquipmentResultWithNames">
+        <include refid="selectEquipmentVoWithNames"/>
+        <where>
+            <if test="beehiveId != null "> and e.beehive_id = #{beehiveId}</if>
+            <if test="apiaryId != null "> and e.apiary_id = #{apiaryId}</if>
+            <if test="deviceStatus != null "> and e.device_status = #{deviceStatus}</if>
         </where>
     </select>
     
@@ -30,17 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertEquipment" parameterType="Equipment" useGeneratedKeys="true" keyProperty="equipmentId">
-        insert into equipment
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="beehiveId != null">beehive_id,</if>
-            <if test="apiaryId != null">apiary_id,</if>
-            <if test="deviceStatus != null">device_status,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="beehiveId != null">#{beehiveId},</if>
-            <if test="apiaryId != null">#{apiaryId},</if>
-            <if test="deviceStatus != null">#{deviceStatus},</if>
-         </trim>
+        insert into equipment (apiary_id, device_status)
+        values (#{apiaryId}, #{deviceStatus})
     </insert>
 
     <update id="updateEquipment" parameterType="Equipment">
@@ -49,8 +60,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="beehiveId != null">beehive_id = #{beehiveId},</if>
             <if test="apiaryId != null">apiary_id = #{apiaryId},</if>
             <if test="deviceStatus != null">device_status = #{deviceStatus},</if>
+            <if test="power != null and power != ''">power = #{power},</if>
         </trim>
         where equipment_id = #{equipmentId}
+    </update>
+
+    <update id="updateEquipmentByBeehiveId" parameterType="Equipment">
+        update equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceStatus != null">device_status = #{deviceStatus},</if>
+        </trim>
+        where beehive_id = #{beehiveId}
+    </update>
+
+    <update id="updateEquipmentByBeehiveIdAndApiaryId" parameterType="Equipment">
+        update equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="beehiveId != null">beehive_id = #{beehiveId},</if>
+            <if test="deviceStatus != null">device_status = #{deviceStatus},</if>
+        </trim>
+        where apiary_id = #{apiaryId} and beehive_id is null
     </update>
 
     <delete id="deleteEquipmentByEquipmentId" parameterType="Long">
@@ -58,9 +87,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteEquipmentByEquipmentIds" parameterType="String">
-        delete from equipment where equipment_id in 
+        delete from equipment where equipment_id in
         <foreach item="equipmentId" collection="array" open="(" separator="," close=")">
             #{equipmentId}
         </foreach>
     </delete>
+
+    <select id="selectEquipmentByPower" parameterType="String" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        where power = #{power}
+    </select>
 </mapper>

@@ -53,9 +53,33 @@ public interface EquipmentMapper
 
     /**
      * 批量删除设备管理
-     * 
+     *
      * @param equipmentIds 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteEquipmentByEquipmentIds(Long[] equipmentIds);
+
+    /**
+     * 通过蜂箱ID更新设备状态
+     *
+     * @param equipment 设备（包含beehiveId和deviceStatus）
+     * @return 结果
+     */
+    public int updateEquipmentByBeehiveId(Equipment equipment);
+
+    /**
+     * 通过蜂厂ID和空蜂箱ID更新设备（激活时关联设备）
+     *
+     * @param equipment 设备（包含apiaryId、beehiveId和deviceStatus）
+     * @return 结果
+     */
+    public int updateEquipmentByBeehiveIdAndApiaryId(Equipment equipment);
+
+    /**
+     * 通过密文查找设备
+     *
+     * @param power 设备密文
+     * @return 设备
+     */
+    public Equipment selectEquipmentByPower(String power);
 }

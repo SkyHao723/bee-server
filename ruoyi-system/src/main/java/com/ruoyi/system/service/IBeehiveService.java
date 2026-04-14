@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.Beehive;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 蜂箱管理Service接口
@@ -18,6 +19,14 @@ public interface IBeehiveService
      * @return 蜂箱管理
      */
     public Beehive selectBeehiveByBeehiveId(Long beehiveId);
+
+    /**
+     * 通过权力密钥查询蜂箱
+     *
+     * @param power 权力密钥
+     * @return 蜂箱
+     */
+    public Beehive selectBeehiveByPower(String power);
 
     /**
      * 查询蜂箱管理列表
@@ -53,9 +62,19 @@ public interface IBeehiveService
 
     /**
      * 删除蜂箱管理信息
-     * 
+     *
      * @param beehiveId 蜂箱管理主键
      * @return 结果
      */
     public int deleteBeehiveByBeehiveId(Long beehiveId);
+
+    /**
+     * 激活蜂箱并关联设备（扫码绑定后调用）
+     *
+     * @param beehive 蜂箱信息（包含beehiveId和power）
+     * @param deviceStatus 设备状态
+     * @return 结果
+     */
+    @Transactional
+    public int activateBeehive(Beehive beehive, Integer deviceStatus);
 }

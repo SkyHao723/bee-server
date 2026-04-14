@@ -10,10 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="contactName"    column="contact_name"    />
         <result property="contactPhone"    column="contact_phone"    />
         <result property="apiaryAddress"    column="apiary_address"    />
+        <result property="location"    column="location"    />
     </resultMap>
 
     <sql id="selectApiaryVo">
-        select apiary_id, apiary_name, contact_name, contact_phone, apiary_address from apiary
+        select apiary_id, apiary_name, contact_name, contact_phone, apiary_address, location from apiary
     </sql>
 
     <select id="selectApiaryList" parameterType="Apiary" resultMap="ApiaryResult">
@@ -38,12 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contactName != null and contactName != ''">contact_name,</if>
             <if test="contactPhone != null and contactPhone != ''">contact_phone,</if>
             <if test="apiaryAddress != null and apiaryAddress != ''">apiary_address,</if>
+            <if test="location != null and location != ''">location,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="apiaryName != null and apiaryName != ''">#{apiaryName},</if>
             <if test="contactName != null and contactName != ''">#{contactName},</if>
             <if test="contactPhone != null and contactPhone != ''">#{contactPhone},</if>
             <if test="apiaryAddress != null and apiaryAddress != ''">#{apiaryAddress},</if>
+            <if test="location != null and location != ''">#{location},</if>
          </trim>
     </insert>
 
@@ -54,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contactName != null and contactName != ''">contact_name = #{contactName},</if>
             <if test="contactPhone != null and contactPhone != ''">contact_phone = #{contactPhone},</if>
             <if test="apiaryAddress != null and apiaryAddress != ''">apiary_address = #{apiaryAddress},</if>
+            <if test="location != null and location != ''">location = #{location},</if>
         </trim>
         where apiary_id = #{apiaryId}
     </update>
